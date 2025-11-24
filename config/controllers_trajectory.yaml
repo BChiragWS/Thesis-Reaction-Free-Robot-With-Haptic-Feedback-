@@ -1,0 +1,41 @@
+# 1. The Reporter (Senses) - No change
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 100
+
+# 2. The Joystick (Haptic "Virtual Spring") - No change
+pitch_effort_controller:
+  type: effort_controllers/JointPositionController
+  joint: pitch_j
+  pid: {p: 10.0, i: 0.001, d: 0.01} # Use your tuned D-gain
+
+roll_effort_controller:
+  type: effort_controllers/JointPositionController
+  joint: roll_j
+  pid: {p: 10.0, i: 0.001, d: 0.01} # Use your tuned D-gain
+
+# 3. The Arm (NEW "Conductor")
+# This is the only part that is different from your other file
+arm_controller:
+  type: velocity_controllers/JointTrajectoryController
+  joints:
+     - j1
+     - j2
+
+  # --- ADD THIS BLOCK ---
+  gains:
+    j1: {p: 0.25, i: 0.0, d: 0.02, i_clamp: 1.0}
+    j2: {p: 0.25, i: 0.0, d: 0.02, i_clamp: 1.0}
+  # ----------------------
+
+  constraints:
+    goal_time: 1.0                  
+    stopped_velocity_tolerance: 0.02
+    j1:
+      goal: 0.05
+    j2:
+      goal: 0.05
+
+  state_publish_rate: 100
+  action_monitor_rate: 10
+  stop_trajectory_duration: 0.5

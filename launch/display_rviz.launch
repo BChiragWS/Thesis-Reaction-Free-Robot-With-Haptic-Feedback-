@@ -1,0 +1,21 @@
+<launch>
+  <!-- ===== args you can change ===== -->
+  <arg name="urdf_path" default="$(find final3)/urdf/final3_rviz.urdf"/>
+  <arg name="use_gui"   default="true"/>       <!-- joint sliders -->
+  <arg name="rviz_cfg"  default="$(find final1)/config/final3_view.rviz"/>
+
+  <!-- Robot Description -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg urdf_path)"/>
+
+  <!-- Joint state source (GUI sliders for j1, j2, pitch_j, roll_j) -->
+  <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="jsp_gui" if="$(arg use_gui)"/>
+  <node pkg="joint_state_publisher"     type="joint_state_publisher"     name="jsp"     unless="$(arg use_gui)"/>
+
+  <!-- TF broadcaster from robot_description -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" value="100.0"/>
+  </node>
+
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+</launch>

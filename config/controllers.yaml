@@ -1,0 +1,23 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 100
+
+j1_damper:
+  type: velocity_controllers/JointVelocityController
+  joint: j1
+  pid: {p: 0.25, i: 0.0, d: 0.01}
+
+j2_damper:
+  type: velocity_controllers/JointVelocityController
+  joint: j2
+  pid: {p: 0.25, i: 0.0, d: 0.01}
+
+pitch_effort_controller:
+  type: effort_controllers/JointPositionController # CHANGED from JointEffortController
+  joint: pitch_j
+  pid: {p: 4.0, i: 0.001, d: 0.01} # ADDED gains from your text
+
+roll_effort_controller:
+  type: effort_controllers/JointPositionController # CHANGED from JointEffortController
+  joint: roll_j
+  pid: {p: 4.0, i: 0.001, d: 0.01} # ADDED gains from your text

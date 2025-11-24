@@ -1,0 +1,17 @@
+Panels:
+- Class: rviz/Displays
+  Name: Displays
+Visualization Manager:
+  Fixed Frame: base_link
+  Displays:
+  - Class: rviz/RobotModel
+    Name: Robot
+    Robot Description: robot_description
+  - Class: rviz/TF
+    Name: TF
+    Show Names: true
+  - Class: rviz/Grid
+    Name: Grid
+    Plane: XY
+    Cell Size: 0.25
+    Alpha: 0.5
